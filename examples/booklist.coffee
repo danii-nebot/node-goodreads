@@ -31,6 +31,28 @@ onRequest = (req, res) ->
   console.log 'request for [' + pathname + '] received'
   switch pathname
 
+    when '/series'
+      console.log 'Getting list of books from series ' + '40650'
+
+      gr = new goodreads.client { 'key': key, 'secret': secret }
+      gr.getSeries '40650', (json) =>
+        if json
+          # Received valid response from Goodreads
+          res.write JSON.stringify json
+          # Normally this is where you'd output a beautiful template or something!
+          res.end()
+
+    when '/author', '/author/'
+      console.log 'Getting page 2 of list of books by author ' + '18541'
+
+      gr = new goodreads.client { 'key': key, 'secret': secret }
+      gr.getAuthor '18541', 2, (json) =>
+        if json
+          # Received valid response from Goodreads
+          res.write JSON.stringify json
+          # Normally this is where you'd output a beautiful template or something!
+          res.end()
+
     # get a user's list of shelves
     when '/shelves', '/shelves/'
       console.log 'Getting shelves ' + '4085451'

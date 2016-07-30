@@ -48,6 +48,35 @@
     pathname = url.parse(req.url).pathname;
     console.log('request for [' + pathname + '] received');
     switch (pathname) {
+      case '/series':
+        console.log('Getting list of books from series ' + '40650');
+        gr = new goodreads.client({
+          'key': key,
+          'secret': secret
+        });
+        return gr.getSeries('40650', (function(_this) {
+          return function(json) {
+            if (json) {
+              res.write(JSON.stringify(json));
+              return res.end();
+            }
+          };
+        })(this));
+      case '/author':
+      case '/author/':
+        console.log('Getting page 2 of list of books by author ' + '18541');
+        gr = new goodreads.client({
+          'key': key,
+          'secret': secret
+        });
+        return gr.getAuthor('18541', 2, (function(_this) {
+          return function(json) {
+            if (json) {
+              res.write(JSON.stringify(json));
+              return res.end();
+            }
+          };
+        })(this));
       case '/shelves':
       case '/shelves/':
         console.log('Getting shelves ' + '4085451');

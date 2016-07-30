@@ -35,6 +35,28 @@ class Goodreads
     @options.secret = gr_secret or @options.secret
     @options.callback = gr_callback or @options.callback
 
+  ### AUTHORS AND SERIES LIST OF BOOKS ###
+
+  # getAuthor - Get paginated list of books for a given author
+  # Input: authorId, page
+  # Output: json (as callback)
+  # Example: getAuthor '18541', 2, (json) ->
+  getAuthor: (authorId, page, callback) ->
+    # Provide path to the API
+    @options.path = 'https://www.goodreads.com/author/list/' + authorId + "?key=" + @options.key + '&page=' + page
+
+    @getRequest callback
+
+  # getSeries - Get all books in a given series
+  # Input: seriesId
+  # Output: json (as callback)
+  # Example: getSeries '40650', (json) ->
+  getSeries: (seriesId, callback) ->
+    # Provide path to the API
+    @options.path = 'https://www.goodreads.com/series/' + seriesId + "?key=" + @options.key
+
+    @getRequest callback
+
   ### BOOKSHELVES ###
 
   # getShelves - Get all shelves for a given user
